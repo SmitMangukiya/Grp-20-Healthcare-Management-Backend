@@ -55,7 +55,6 @@ router.post('/register',
                 password: hashedPassword,
                 address: req.body.address,
                 city: req.body.city,
-                state: req.body.state,
                 contact_number: req.body.contact_number,
             });
 
