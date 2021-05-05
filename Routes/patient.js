@@ -200,7 +200,7 @@ router.post('/addreport', async (req, res) => {
 });
 
 // get all report for requested email-id.
-router.get('/getreports', async(req, res) => {
+router.post('/getreports', async(req, res) => {
     try{
         const patient = await Patient.findOne({email: req.body.email});
         console.log(patient);
