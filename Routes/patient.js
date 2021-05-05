@@ -215,7 +215,7 @@ router.post('/getreports', async(req, res) => {
 });
 
 router.post('/report/pulseRate', async(req, res) => {
-    const patient_id = req.query._id
+    const patient_id = req.body._id
 
     Report.find({$and :[{ patient: patient_id},{pulseRate :{$gt:0}}]}, {pulseRate:1,date:1,_id:0})
     .sort({date:-1})
