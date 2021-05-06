@@ -13,6 +13,10 @@ const appointmentSchema = new Schema({
     date: {
         type : Date,
         default : Date.now()
+    },
+    isApproved: {
+        type : Boolean,
+        default : false
     }
 });
 

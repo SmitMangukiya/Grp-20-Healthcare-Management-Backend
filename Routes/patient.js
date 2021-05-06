@@ -7,6 +7,8 @@ const bcrypt = require('bcryptjs');
 const Patient = require('../Models/patient');
 const Doctor = require('../Models/doctor');
 const Report = require('../Models/report');
+const Medical = require('../Models/medical');
+const Appointment = require('../Models/appointment');
 
 // Sign-up for patient
 router.post('/register',
@@ -222,6 +224,98 @@ router.post('/report/pulseRate', async(req, res) => {
     .limit(10).then(data => {
         res.send(data);
     })
+});
+
+router.post('/getmedicals', async(req, res) => {
+    try{
+        console.log(req.body._id);
+        const medical_list = await Medical.find({patient :req.body._id});
+        res.status(200).json({ok: true, medical_list});
+    }
+    catch(err){
+        console.log(err);
+        res.status(400).json({ok:false, err: err});
+    }
+});
+
+router.delete('/deletemedical', async (req, res) => {
+    try{
+      await Medical.deleteOne({_id : req.body._id}, (err, output) => {
+        if(err){
+            console.log(err);
+        }
+        console.log(output);
+      });
+      res.status(200).json({ok: true});
+    }
+    catch(err){
+        console.log(err);
+        res.status(400).json({ok:false, err: err});
+    }
+});
+
+router.post('/addappointment', async(req, res) => {
+    try{
+        const appointment = new Appointment({
+            patient: req.body.patient,
+            doctor: req.body.doctor,
+            date: req.body.date
+        });
+
+        await appointment.save();
+        console.log(appointment);
+        res.status(200).json({ok:true, data: appointment});
+    }
+    catch(err){
+        console.log(err);
+        res.status(400).json({ok:false, err: err});
+    }
+});
+
+router.post('/pending-appointment', async(req, res) => {
+    try{
+        const list = await Appointment.find({ $and : [{ patient : req.body.id }, {isApproved :false }] });
+        console.log(list);
+        res.status(200).json({ok:true, data: list});
+    }
+    catch(err){
+        console.log(err);
+        res.status(400).json({ok:false, err: err});
+    }
+});
+
+router.post('/approved-appointment', async(req, res) => {
+    try{
+        const list = await Appointment.find({ $and : [{ patient : req.body.id }, {isApproved :true }] });
+        console.log(list);
+        res.status(200).json({ok:true, data: list});
+    }
+    catch(err){
+        console.log(err);
+        res.status(400).json({ok:false, err: err});
+    }
+});
+
+router.post('/getdoctors', async(req, res) => {
+    try{
+        const list = await Doctor.find({}, {_id : 1, name: 1, email: 1});
+        res.status(200).json({ok : true, data : list});
+    }
+    catch(err){
+        console.log(err);
+        res.status(400).json({ok:false, err: err});
+    }
+});
+
+router.post('/getdata', async(req, res) => {
+    try{
+        const patient = Patient.find({_id : req.body._id});
+        res.status(200).json({ok :true, data : patient});
+    }
+    catch(err){
+        console.log(err);
+        res.status(400).json({ok:false, err: err});
+    }
 });
 
 module.exports = router;
