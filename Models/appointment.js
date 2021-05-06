@@ -10,6 +10,14 @@ const appointmentSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Doctor'
     },
+    patientName: {
+        type: String,
+        trim: true
+    },
+    doctorName: {
+        type: String,
+        trim: true
+    }
     date: {
         type : Date,
         default : Date.now()

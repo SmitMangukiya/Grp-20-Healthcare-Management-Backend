@@ -259,7 +259,9 @@ router.post('/addappointment', async(req, res) => {
         const appointment = new Appointment({
             patient: req.body.patient,
             doctor: req.body.doctor,
-            date: req.body.date
+            date: req.body.date,
+            patientName: req.body.patientName,
+            doctorName: req.body.doctorName
         });
 
         await appointment.save();
