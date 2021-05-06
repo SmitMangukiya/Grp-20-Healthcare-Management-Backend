@@ -259,7 +259,7 @@ router.post('/approved-appointment', async(req, res) => {
 
 router.post('/getpatients', async(req, res) => {
     try{
-        const list = await Patient.find({}, {_id : 1, name: 1, email: 1});
+        const list = await Patient.find();
         res.status(200).json({ok : true, data : list});
     }
     catch(err){
