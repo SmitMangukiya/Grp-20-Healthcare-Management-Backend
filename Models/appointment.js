@@ -17,7 +17,7 @@ const appointmentSchema = new Schema({
     doctorName: {
         type: String,
         trim: true
-    }
+    },
     date: {
         type : Date,
         default : Date.now()
