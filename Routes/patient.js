@@ -9,6 +9,8 @@ const Doctor = require('../Models/doctor');
 const Report = require('../Models/report');
 const Medical = require('../Models/medical');
 const Appointment = require('../Models/appointment');
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 
 // Sign-up for patient
 router.post('/register',
@@ -326,6 +328,43 @@ router.put('/setdoctor', async(req, res) => {
         .then(res => console.log(res))
         .catch(err => console.log(err));
         res.status(200).json({ok : true});
+    }
+    catch(err){
+        console.log(err);
+        res.status(400).json({ok:false, err: err});
+    }
+});
+
+router.post('/sendmail', async(req, res) => {
+    try {
+    var transporter = nodemailer.createTransport(smtpTransport({
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    auth: {
+        user: 'group20da2018@gmail.com',
+        pass: 'dummyPassword20'
+    }
+    }));
+    console.log(req.body);
+    var mailOptions = {
+      from: 'group20da2018@gmail.com',
+      to: req.body.email,
+      subject: 'IMPORTANT: Patient Abnormality Alert!',
+      text: req.body.txt
+    };
+
+    let ok = false;
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ');
+          ok = true;
+        }
+    });
+    res.status(ok ? 200 : 400).json({ok:ok});
+
     }
     catch(err){
         console.log(err);
