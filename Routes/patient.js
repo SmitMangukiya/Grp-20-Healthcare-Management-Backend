@@ -363,7 +363,8 @@ router.post('/sendmail', async(req, res) => {
           ok = true;
         }
     });
-    res.status(ok ? 200 : 400).json({ok:ok});
+      console.log( ok ) ;
+    res.status(200).json({ok:ok});
 
     }
     catch(err){
