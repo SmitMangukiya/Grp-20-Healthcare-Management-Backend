@@ -320,4 +320,17 @@ router.post('/getdata', async(req, res) => {
     }
 });
 
+router.put('/setdoctor', async(req, res) => {
+    try{
+        await Patient.findOneAndUpdate({ _id: req.body._id}, { $set : {doctor_email : req.body.doctor_email} })
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+        res.status(200).json({ok : true});
+    }
+    catch(err){
+        console.log(err);
+        res.status(400).json({ok:false, err: err});
+    }
+});
+
 module.exports = router;

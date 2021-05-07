@@ -30,6 +30,10 @@ const patientSchema = new Schema({
         required: true,
         trim: true
     },
+    doctor_email: {
+        type: String,
+        trim: true
+    },
     reports: [{
         type: Schema.Types.ObjectId,
         ref: 'Report'
