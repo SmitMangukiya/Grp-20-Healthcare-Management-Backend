@@ -341,13 +341,13 @@ router.post('/sendmail', async(req, res) => {
     service: 'gmail',
     host: 'smtp.gmail.com',
     auth: {
-        user: 'group20da2018@gmail.com',
-        pass: 'dummyPassword20'
+        user: 'random9533@gmail.com',
+        pass: 'SPMPROJECT'
     }
     }));
     console.log(req.body);
     var mailOptions = {
-      from: 'group20da2018@gmail.com',
+      from: 'random9533@gmail.com',
       to: req.body.email,
       subject: 'IMPORTANT: Patient Abnormality Alert!',
       text: req.body.txt
